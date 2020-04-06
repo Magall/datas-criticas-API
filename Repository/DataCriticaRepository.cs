@@ -46,7 +46,7 @@ namespace DatasCriticasApi.Repository.IRepository
 
         public ICollection<DataCritica> GetPeriodDatasCriticas(DateTime InitialDate, DateTime EndDate)
         {
-            return _db.DatasCriticas.Where(obj => obj.InitialDate >= InitialDate && obj.EndDate < EndDate).ToList();
+            return _db.DatasCriticas.Where(obj => obj.InitialDate >= InitialDate && obj.EndDate < EndDate).OrderBy(dc => dc.InitialDate).ToList();
         }
 
         public bool DeleteDataCritica(DataCritica dc)

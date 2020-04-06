@@ -43,6 +43,13 @@ namespace DatasCriticasApi
             services.AddScoped<IDepartamentoService, DepartamentoService>();
             services.AddScoped<IDataCriticaService, DataCriticaService>();
             services.AddAutoMapper(typeof(Mappings));
+            services.AddSwaggerGen(options => {
+                options.SwaggerDoc("DatasOpenAPISpec", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Datas API",
+                    Version = "1"
+                });
+            });
             services.AddControllers();
             services.AddCors(options =>
             {
@@ -66,7 +73,12 @@ namespace DatasCriticasApi
             }
 
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(options => {
+                options.SwaggerEndpoint("/swagger/DatasOpenAPISpec/swagger.json", "Datas Criticas API");
+                options.RoutePrefix = "";
 
+            });
             app.UseRouting();
 
             app.UseAuthorization();

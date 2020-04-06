@@ -84,6 +84,10 @@
               "target": "Package",
               "version": "[5.0.0-dev-00864, )"
             },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.3.1, )"
+            },
             "System.ComponentModel.Annotations": {
               "target": "Package",
               "version": "[4.7.0, )"
