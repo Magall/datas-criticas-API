@@ -22,17 +22,20 @@ namespace DatasCriticasApi.Services
         }
         public ObjectResult CreateDataCritica(DataCriticaInsertDto dcDto)
         {
-            if (dcDto == null)
+                      
+            var dc = _mapper.Map<DataCritica>(dcDto);
+            DateTime today = DateTime.Today;
+            // Validação para uma data nunca começar antes do dia de inserção e a data de fim sempre ser posterior a de início
+            if (dc.InitialDate > dc.EndDate  || dc.InitialDate < today)
             {
-                return new ObjectResult("Erro ! Campos vazios") { StatusCode = 400 };
-
+                return new ObjectResult("Erro , verifique se as datas inseridas são posteriores ao dia de hoje e se a data final é posterior a inicial. ") { StatusCode = 500 };
             }
             else
             {
-                var dc = _mapper.Map<DataCritica>(dcDto);
+
                 if (_dcRepo.CreateDataCritica(dc))
                 {
-                    return new ObjectResult("Registro inserido") { StatusCode = 200 };
+                   return new ObjectResult("Registro inserido") { StatusCode = 200 };
                 }
                 else
                 {
@@ -40,6 +43,7 @@ namespace DatasCriticasApi.Services
                     
                 }
             }
+            
         }
 
         public List<DataCriticaGetDto> GetDatasCriticas()
@@ -56,7 +60,7 @@ namespace DatasCriticasApi.Services
 
         public List<DataCriticaGetDto> GetMonthAhead()
         {
-            DateTime today = DateTime.Now;
+            DateTime today = DateTime.Today;
             DateTime endDate = today.AddDays(30);
             var dcs = _dcRepo.GetPeriodDatasCriticas(today, endDate);
             var dcDtos = new List<DataCriticaGetDto>();

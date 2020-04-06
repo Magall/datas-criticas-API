@@ -22,7 +22,7 @@ namespace DatasCriticasApi.Controllers
             _service = service;
         }
         [HttpPost]
-        public IActionResult CreateDataCritica([FromForm] DataCriticaInsertDto dcDto)
+        public IActionResult CreateDataCritica([FromBody] DataCriticaInsertDto dcDto)
         {
             var res = _service.CreateDataCritica(dcDto);
             return res;
